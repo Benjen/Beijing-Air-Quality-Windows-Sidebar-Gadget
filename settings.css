@@ -1,0 +1,10 @@
+body {
+	width: 100px;
+	height: 100px;
+}
+#label {
+	float: left;
+}
+#language {
+	float: left;
+}

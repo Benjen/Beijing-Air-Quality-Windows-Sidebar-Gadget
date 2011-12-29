@@ -1,0 +1,79 @@
+ body {
+    height: 120px;
+    width: 130px;
+    background-color: #4F4F4F;
+    font-family: calibre, arial, sans-serif;
+    color: white;
+    margin: 0;
+    padding: 0;
+	border: 1px solid #B4B4B4;
+}
+#title {
+    width: 130px;
+    text-align: center;
+    font-size: 0.7em;
+    font-weight: bold;
+    padding: 5px;
+    color: #FFE25F;
+}
+#main-content {
+    font-size: 0.7em;
+    width: 130px;
+    height: 110px;
+}
+#aq-summary-link {
+	display: block;
+	/*width: 112px;
+	height: 40px;*/
+	text-decoration: none;
+	text-align: center;
+	vertical-align: middle;
+	color: black;
+	font-size: 1.2em;
+	
+	width: 122px;
+	/*height: 40px;*/
+	margin: 0 3px 5px 3px;
+	border: 1px solid #1F1F1F;
+	padding: 10px 0;
+}
+#ppm25-wrapper {
+}
+#ppm25-label {
+	float: left;
+	width: 65px;
+	height: 20px;
+	padding: 5px 10px;
+}
+#ppm25-value {
+	float: left;
+	width: 65px;
+	height: 20px;
+	padding: 5px 10px;
+}
+#ozone-wrapper {
+}
+#ozone-label {
+	display: none;
+	position: absolute;
+	left: 0px;
+	top: 70px;
+	width: 65px;
+	height: 20px;
+	padding: 5px 10px;
+}
+#ozone-value {
+	display: none;
+	position: absolute;
+	left: 60px;
+	top: 70px;
+	width: 65px;
+	height: 20px;
+	padding: 5px 10px;
+}
+#source-data {
+	display: none;
+}
+.chinese {
+	font-size: 1.4em;
+}
