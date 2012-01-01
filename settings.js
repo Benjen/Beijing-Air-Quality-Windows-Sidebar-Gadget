@@ -21,7 +21,8 @@ function init() {
 	else {
 		//document.getElementById('label').innerText = SettingsPageElements.label_cn;
 		document.getElementById('language').options[1].selected = true;
-		document.getElementById('more-info').innerHTML = '此信息来自驻北京美国大使馆网站。请采访此网站为了得到更多信息分析。';
+		document.getElementById('more-info').innerHTML = convertToEntities('此信息来自驻北京美国大使馆网站。请采访此网站为了得到更多信息分析。');
+//		document.getElementById('more-info').innerHTML = '&#27492;&#20449;&#24687;&#26469;&#33258;&#39547;&#21271;&#20140;&#32654;&#22269;&#22823;&#20351;&#39302;&#32593;&#31449;&#12290;&#35831;&#37319;';
 	}
 }
 
@@ -35,3 +36,17 @@ function settingsClosing(event) {
 	}
 };
 
+// Convert string of characters to unicode equivalent. Needed to display Chinese characters using javascript. 
+function convertToEntities(str) {
+	var tstr = str;
+	var bstr = '';
+	for(i=0; i < tstr.length; i++) {
+		if(tstr.charCodeAt(i) > 127) {
+			bstr += '&#' + tstr.charCodeAt(i) + ';';
+		}
+		else {
+			bstr += tstr.charAt(i);
+		}
+	}
+	return bstr; 
+}

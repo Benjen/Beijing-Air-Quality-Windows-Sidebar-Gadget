@@ -81,9 +81,9 @@ function sanitizeString(str) {
 function switchLanguage(lang) {
 	if (lang == 'en') {
 		// Set title.
-    	$('#title').html(PageElements.title);
+    	$('#title').html(PageElements.title).removeClass('chinese');
     	// Set category.
-    	$('#aq-summary-link').html(Aqi.category);
+    	$('#aq-summary-link').html(Aqi.category).removeClass('chinese');
     }
     else {
     	// Set title.
