@@ -30,16 +30,6 @@ function baq_init() {
     System.Gadget.Flyout.file = "flyout.html";
     System.Gadget.settingsUI = "settings.html";
 
-    if (System.Gadget.Settings.read('settingsExist')) {
-    	PageElements.language = System.Gadget.Settings.read('settingsLanguage');
-    }
-    else {
-    	PageElements.language = 'en';
-    }
-    
-    // Configure UI for given language.
-    switchLanguage(PageElements.language);
-    
  	refreshGadget();
 	// Set refresh rate.
 	setInterval("refreshGadget()", 60000);
@@ -90,12 +80,21 @@ function sanitizeString(str) {
 
 function switchLanguage(lang) {
 	if (lang == 'en') {
+		// Set title.
     	$('#title').html(PageElements.title);
+    	// Set category.
+    	$('#aq-summary-link').html(Aqi.category);
     }
     else {
-    	$('#title').html(PageElements.title_cn);
+    	// Set title.
+    	$('#title').addClass('chinese').html(PageElements.title_cn);
+    	// Set category.
+    	$('#aq-summary-link').addClass('chinese').html(Aqi.category_cn);
     }
+
 }
+
+
 
 /**
  * Set message properties
@@ -135,8 +134,8 @@ function setAqiParams(aqi) {
 	    Aqi.textColor = '#3F3F3F';
 	}
 	else if (aqi > 50 && aqi <= 100) {
-		Aqi.category = '中等';	
-	    Aqi.category_cn = '危险';
+		Aqi.category = 'Moderate';	
+	    Aqi.category_cn = '中等';
 		Aqi.advisory = 'Unusually sensitive people should consider reducing prolonged or heavy exertion.';
 	    Aqi.advisory_cn = '特别敏感的人群应该考虑减少长期或沉重的负荷。';
 	    Aqi.color ='#FFFF00';
@@ -150,26 +149,6 @@ function setAqiParams(aqi) {
 	    Aqi.color ='#00E400';
 	    Aqi.textColor = '#3F3F3F';
 	}
-	
-	// Set language.
-	if (PageElements.language == 'en') {
-		$('#aq-summary-link').html(Aqi.category);
-	}
-	else {
-		$('#aq-summary-link').addClass('chinese').html(Aqi.category_cn);
-	}
-	$('#aq-summary-link').css({'backgroundColor' : Aqi.color, 'color' : Aqi.textColor}).fadeOut().fadeIn();
-	
-	// Set click event.
-	$('#aq-summary-link').click(function() {
-        // Toggle on or off based on current show state. 
-		if (!System.Gadget.Flyout.show) {
-        	System.Gadget.Flyout.show = true;
-        }
-        else {
-        	System.Gadget.Flyout.show = false;
-        }
-    });
 }
 
 /**
@@ -183,9 +162,9 @@ function refreshGadget() {
 	// Get new data.
 	$('#source-data').html(feedStr);
 	
+	// Extract and process data.
 	var feedData = $('.rss-item:first', '#source-data').html();
 	var rawData = feedData.slice(feedData.search(/<br>/i));
-	
 	var feedConstant = new Object();
 	feedConstant.DATE = 0;
 	feedConstant.TIME = 1;
@@ -193,14 +172,34 @@ function refreshGadget() {
 	feedConstant.PPM25_AQI_VALUE = 4;
 	feedConstant.MESSAGE = 5;
 	feedConstant.OZONE_VALUE = 6;
-	
 	rawData = rawData.split(';');
 	
 	// Process data message.
 	rawData[feedConstant.MESSAGE] = rawData[feedConstant.MESSAGE].slice(0, rawData[feedConstant.MESSAGE].indexOf('(')).trim();
+    setAqiParams(parseInt(rawData[feedConstant.PPM25_AQI_VALUE].trim()));
+    
+    // Configure UI for given language.
+    if (System.Gadget.Settings.read('settingsExist')) {
+    	PageElements.language = System.Gadget.Settings.read('settingsLanguage');
+    }
+    else {
+    	PageElements.language = 'en';
+    }    
+    switchLanguage(PageElements.language);
 	
+	$('#aq-summary-link').css({'backgroundColor' : Aqi.color, 'color' : Aqi.textColor}).fadeOut().fadeIn();
 	
-	setAqiParams(parseInt(rawData[feedConstant.PPM25_AQI_VALUE].trim()));
+	// Set click event.
+	$('#aq-summary-link').click(function() {
+        // Toggle on or off based on current show state. 
+		if (!System.Gadget.Flyout.show) {
+        	System.Gadget.Flyout.show = true;
+        }
+        else {
+        	System.Gadget.Flyout.show = false;
+        }
+    });
+    
 //	For testing purposes.
 //	setAqiParams(140);
 	$('#ppm25-value').html(sanitizeString(rawData[feedConstant.PPM25_VALUE]));

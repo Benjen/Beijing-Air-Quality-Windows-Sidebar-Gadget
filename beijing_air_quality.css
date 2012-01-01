@@ -74,6 +74,11 @@
 #source-data {
 	display: none;
 }
-.chinese {
-	font-size: 1.4em;
+#title.chinese {
+	font-size: 0.8em;
+	font-weight: normal;
+}
+#aq-summary-link.chinese {
+	font-size: 1.3em;
+	font-weight: bold;
 }

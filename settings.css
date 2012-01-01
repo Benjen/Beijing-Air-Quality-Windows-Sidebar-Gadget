@@ -1,10 +1,10 @@
 body {
-	width: 100px;
-	height: 100px;
+	width: 200px;
+	height: 180px;
 }
-#label {
-	float: left;
+#language-wrapper {
+	margin-bottom: 10px;
 }
-#language {
-	float: left;
+#more-info {
+	font-size: 0.8em;
 }
